@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/heading_img"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/pokemon" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/heading_img"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="220dp"
+            android:layout_height="match_parent"
+            android:background="#FBC02D"
+            android:fontFamily="@font/autour_one"
+            android:onClick="pokemons"
+            android:padding="5dp"
+            android:text="Pokemon"
+            android:textAllCaps="true"
+            android:textColor="#1a237e"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:layout_width="220dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="35dp"
+            android:background="#FBC02D"
+            android:fontFamily="@font/autour_one"
+            android:padding="5dp"
+            android:text="Pokemon Types"
+            android:textAllCaps="true"
+            android:textColor="#1a237e"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:onClick="types"/>
+
+        <Button
+            android:layout_width="220dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="35dp"
+            android:background="#FBC02D"
+            android:fontFamily="@font/autour_one"
+            android:padding="5dp"
+            android:text="Region wise Pokemons"
+            android:textAllCaps="true"
+            android:textColor="#1a237e"
+            android:textStyle="bold"
+            android:onClick="region"/>
+
+        <Button
+            android:layout_width="220dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="35dp"
+            android:background="#FBC02D"
+            android:fontFamily="@font/autour_one"
+            android:padding="5dp"
+            android:text="Location"
+            android:textAllCaps="true"
+            android:textColor="#1a237e"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:onClick="locations"/>
+
+        <Button
+            android:layout_width="220dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="35dp"
+            android:background="#FBC02D"
+            android:fontFamily="@font/autour_one"
+            android:padding="5dp"
+            android:text="Items"
+            android:textAllCaps="true"
+            android:textColor="#1a237e"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:onClick="items"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
