@@ -11,7 +11,7 @@ public class ItemData {
     public List<Items> getResults() {   return results; }
     public void setResults(List<Items> results) {   this.results = results; }
 
-    public class Items{
+    public static class Items {
         @SerializedName("url")
         private String url;
         @SerializedName("name")

@@ -19,7 +19,7 @@ public class PokemonData {
 
 
 
-    public class Pokemon {
+    class Pokemon {
 
         @SerializedName("url")
         private String url;

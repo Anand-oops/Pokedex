@@ -11,7 +11,7 @@ public class LocationData {
     public List<LocationData.Location> getResults() {   return results; }
     public void setResults(List<LocationData.Location> results) {   this.results = results; }
 
-    public class Location{
+    class Location {
 
         @SerializedName("name")
         private String name;

@@ -21,13 +21,13 @@ public class PokemonApi {
         return pokeService;
     }
 
-    public interface PokemonAPiInterface{
+    public interface PokemonAPiInterface {
 
         @GET("pokemon/?limit=964&offset=0")
         Call<PokemonData> getPokemonList();
 
-        //@GET("/")
-        //Call<PokemonDetails> getPokemonDetails();
+        @GET("pokemon/{id}/")
+        Call<PokemonDetailsData> getPokemonDetails(@Path("id") String id);
 
         @GET("item/?limit=1000")
         Call<ItemData> getItemsList();
@@ -35,23 +35,10 @@ public class PokemonApi {
         @GET("location/?limit=781")
         Call<LocationData> getLocationList();
 
-        @GET("pokedex/{id}")
+        @GET("pokedex/{id}/")
         Call<RegionPokemonData> getRegionPokemonList(@Path("id") int ID);
 
-        @GET("type/{id}")
+        @GET("type/{id}/")
         Call<TypePokemonData> getTypePokemonList(@Path("id") int ID);
     }
-
-    public static PokemonAPiInterface pokeDetailService = null;
-    public static PokemonAPiInterface getPokeDetailService(String baseUrl){
-        if(pokeDetailService==null){
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(baseUrl)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-            pokeDetailService = retrofit.create(PokemonAPiInterface.class);
-        }
-        return pokeDetailService;
-    }
-
 }

@@ -36,20 +36,6 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
         final ItemData.Items item = itemList.get(position);
         holder.itemName.setText(item.getName());
         Picasso.with(context).load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/" +item.getName()+ ".png").into(holder.itemImage);
-        /*holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, PokeDetailsActivity.class);
-                String url = pokemon.getUrl();
-                String result = null;
-                if((url!=null)&&(url.length()>0)){
-                    result = url.substring(0,url.length()-1);
-                }
-                intent.putExtra("url",pokemon.getUrl());
-                context.startActivity(intent);
-
-            }
-        });*/
     }
 
     @Override

@@ -1,10 +1,13 @@
 package com.example.android.pokedex;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.agrawalsuneet.dotsloader.loaders.LazyLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +20,8 @@ public class PokemonType extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pokemonlist);
-
+        LazyLoader lazyLoader = findViewById(R.id.loader);
+        lazyLoader.setVisibility(View.GONE);
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         getData();
@@ -43,6 +47,6 @@ public class PokemonType extends AppCompatActivity {
         pokemonTypes.add("dark");
         pokemonTypes.add("fairy");
 
-        recyclerView.setAdapter(new PokemonTypeAdapter(getApplicationContext(),pokemonTypes));
+        recyclerView.setAdapter(new TypeListAdapter(getApplicationContext(), pokemonTypes));
     }
 }

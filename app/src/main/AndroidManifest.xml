@@ -12,20 +12,41 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashActivity" >
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".PokemonList" />
-        <activity android:name=".ItemList" />
-        <activity android:name=".LocationList"/>
-        <activity android:name=".PokemonType"/>
-        <activity android:name=".PokemonRegion"/>
-        <activity android:name=".RegionSpecificPoke"/>
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PokemonList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ItemList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LocationList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PokemonType"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PokemonRegion"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RegionSpecificPoke"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TypeSpecificPoke"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PokemonDetails"
+            android:screenOrientation="portrait" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

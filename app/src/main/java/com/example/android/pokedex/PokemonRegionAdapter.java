@@ -2,83 +2,76 @@ package com.example.android.pokedex;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
-public class PokemonRegionAdapter extends RecyclerView.Adapter<PokemonRegionAdapter.RegionViewHolder>  {
-    private static final String TAG = "RA";
-    private Context context;
-    private List<String> regions;
+public class PokemonRegionAdapter extends RecyclerView.Adapter<PokemonRegionAdapter.PokemonViewHolder> {
 
-    public PokemonRegionAdapter(Context ctx, List<String> data) {
+    private Context context;
+    private List<RegionPokemonData.Species> regionPokemonData;
+    private String originalID = null;
+
+    public PokemonRegionAdapter(Context ctx, List<RegionPokemonData.Species> pokemons) {
         context = ctx;
-        regions = data;
+        regionPokemonData = pokemons;
     }
 
     @NonNull
     @Override
-    public PokemonRegionAdapter.RegionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PokemonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.pokemontypes_item, parent, false);
-        return new RegionViewHolder(view);
+        View view = inflater.inflate(R.layout.pokemonlist_item, parent, false);
+        return new PokemonViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PokemonRegionAdapter.RegionViewHolder holder, final int position) {
-        final String region = regions.get(position);
-        holder.pokemon_type.setText(region);
+    public void onBindViewHolder(@NonNull PokemonViewHolder holder, final int position) {
+        final String urlId = regionPokemonData.get(position).getPokemonSpecies().getUrl();
+        if (urlId.length() > 0) {
+            originalID = urlId.substring(42, urlId.length() - 1);
+        }
+        holder.pokemonName.setText(regionPokemonData.get(position).getPokemonSpecies().getName());
+        Picasso.with(context).load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + originalID + ".png").into(holder.pokemonImage);
+        final String result = originalID;
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context,"Clicked",Toast.LENGTH_SHORT).show();
-                Log.i(TAG, "onClick: position: "+(position+1));
-                int ID= getRegionId(position+1);
-                Intent intent =new Intent(context,RegionSpecificPoke.class);
-                intent.putExtra("id",ID);
+                Intent intent = new Intent(context, PokemonDetails.class);
+                intent.putExtra("ID", result);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
         });
     }
 
-    private int getRegionId(int x){
-        int result=0;
-        switch (x){
-            case 1: result= 2; break;
-            case 2: result= 3;  break;
-            case 3: result= 4;  break;
-            case 4: result= 5;  break;
-            case 5: result= 8;  break;
-            case 6: result= 12; break;
-            case 7: result= 16;    break;
-        }
-        return result;
-    }
-
     @Override
     public int getItemCount() {
-        return regions.size();
+        return regionPokemonData.size();
     }
 
+    public void filterList(List<RegionPokemonData.Species> pokemonList) {
+        this.regionPokemonData = pokemonList;
+        notifyDataSetChanged();
+    }
 
-    public static class RegionViewHolder extends RecyclerView.ViewHolder{
-        TextView pokemon_type;
-        ImageView pokemon_image;
+    public static class PokemonViewHolder extends RecyclerView.ViewHolder {
+        ImageView pokemonImage;
+        TextView pokemonName;
 
-        public RegionViewHolder(@NonNull View itemView) {
+        public PokemonViewHolder(@NonNull View itemView) {
             super(itemView);
-            pokemon_type = itemView.findViewById(R.id.pokemon_type);
-            pokemon_image = itemView.findViewById(R.id.type_ic);
-            pokemon_image.setVisibility(View.GONE);
+            pokemonImage = itemView.findViewById(R.id.pokemonImage);
+            pokemonName = itemView.findViewById(R.id.pokemonName);
         }
     }
 }

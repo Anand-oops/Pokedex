@@ -1,18 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/black">
 
+    <EditText
+        android:id="@+id/search_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="12dp"
+        android:backgroundTint="@android:color/holo_orange_light"
+        android:drawableStart="@drawable/search_ic"
+        android:fontFamily="@font/merienda_one"
+        android:hint="Search"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/darker_gray"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+    <com.agrawalsuneet.dotsloader.loaders.LazyLoader
+        android:id="@+id/loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="20dp"
+        app:lazyloader_animDur="800"
+        app:lazyloader_dotsDist="10dp"
+        app:lazyloader_dotsRadius="16dp"
+        app:lazyloader_firstDelayDur="150"
+        app:lazyloader_firstDotColor="@android:color/holo_orange_light"
+        app:lazyloader_interpolator="@android:anim/decelerate_interpolator"
+        app:lazyloader_secondDelayDur="300"
+        app:lazyloader_secondDotColor="@android:color/holo_orange_light"
+        app:lazyloader_thirdDotColor="@android:color/holo_orange_light" />
+
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_below="@id/search_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recycler_view"
         android:layout_margin="12dp"
+        android:scrollbarThumbVertical="@android:color/holo_orange_light"
         android:scrollbars="vertical"
-        android:verticalScrollbarPosition="defaultPosition"
-        android:scrollbarThumbVertical="@android:color/holo_orange_light"/>
+        android:verticalScrollbarPosition="defaultPosition" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

@@ -2,66 +2,53 @@ package com.example.android.pokedex;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
-public class PokemonTypeAdapter extends RecyclerView.Adapter<PokemonTypeAdapter.TypeViewHolder> {
-    private static final String TAG ="PTA" ;
+public class PokemonTypeAdapter extends RecyclerView.Adapter<PokemonTypeAdapter.PokemonViewHolder> {
+    private static final String TAG = "PTA";
     private Context context;
-    private List<String> pokemonType;
+    private List<TypePokemonData.TypeData> typePokemonData;
+    private String originalID = null;
 
-    public PokemonTypeAdapter(Context ctx, List<String> data) {
+    public PokemonTypeAdapter(Context ctx, List<TypePokemonData.TypeData> pokemons) {
         context = ctx;
-        pokemonType = data;
+        typePokemonData = pokemons;
     }
 
     @NonNull
     @Override
-    public PokemonTypeAdapter.TypeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PokemonTypeAdapter.PokemonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.pokemontypes_item, parent, false);
-        return new TypeViewHolder(view);
+        View view = inflater.inflate(R.layout.pokemonlist_item, parent, false);
+        return new PokemonTypeAdapter.PokemonViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PokemonTypeAdapter.TypeViewHolder holder, final int position) {
-        final String type = pokemonType.get(position);
-        holder.pokemon_type.setText(type);
-        switch (position){
-            case 0:holder.type_icon.setImageResource(R.drawable.normal);   break;
-            case 1:holder.type_icon.setImageResource(R.drawable.fighting);   break;
-            case 2:holder.type_icon.setImageResource(R.drawable.flying);   break;
-            case 3:holder.type_icon.setImageResource(R.drawable.poison);   break;
-            case 4:holder.type_icon.setImageResource(R.drawable.ground);   break;
-            case 5:holder.type_icon.setImageResource(R.drawable.rock);   break;
-            case 6:holder.type_icon.setImageResource(R.drawable.bug);   break;
-            case 7:holder.type_icon.setImageResource(R.drawable.ghost);   break;
-            case 8:holder.type_icon.setImageResource(R.drawable.steel);   break;
-            case 9:holder.type_icon.setImageResource(R.drawable.fire);   break;
-            case 10:holder.type_icon.setImageResource(R.drawable.water);   break;
-            case 11:holder.type_icon.setImageResource(R.drawable.grass);   break;
-            case 12:holder.type_icon.setImageResource(R.drawable.electric);   break;
-            case 13:holder.type_icon.setImageResource(R.drawable.psychic);   break;
-            case 14:holder.type_icon.setImageResource(R.drawable.ice);   break;
-            case 15:holder.type_icon.setImageResource(R.drawable.dragon);   break;
-            case 16:holder.type_icon.setImageResource(R.drawable.dark);   break;
-            case 17:holder.type_icon.setImageResource(R.drawable.fairy);   break;
+    public void onBindViewHolder(@NonNull PokemonTypeAdapter.PokemonViewHolder holder, final int position) {
+        final String urlId = typePokemonData.get(position).getPokemon().getUrl();
+        if (urlId.length() > 0) {
+            originalID = urlId.substring(34, urlId.length() - 1);
         }
+        holder.pokemonName.setText(typePokemonData.get(position).getPokemon().getName());
+        Picasso.with(context).load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + originalID + ".png").into(holder.pokemonImage);
+        final String result = originalID;
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(context,RegionSpecificPoke.class);
-                intent.putExtra("id",position+1);
+                Intent intent = new Intent(context, PokemonDetails.class);
+                intent.putExtra("ID", result);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
         });
@@ -69,17 +56,22 @@ public class PokemonTypeAdapter extends RecyclerView.Adapter<PokemonTypeAdapter.
 
     @Override
     public int getItemCount() {
-        return pokemonType.size();
+        return typePokemonData.size();
     }
 
-    public static class TypeViewHolder extends RecyclerView.ViewHolder{
-        ImageView type_icon;
-        TextView pokemon_type;
+    public void filterList(List<TypePokemonData.TypeData> pokemonList) {
+        this.typePokemonData = pokemonList;
+        notifyDataSetChanged();
+    }
 
-        public TypeViewHolder(@NonNull View itemView) {
+    public static class PokemonViewHolder extends RecyclerView.ViewHolder {
+        ImageView pokemonImage;
+        TextView pokemonName;
+
+        public PokemonViewHolder(@NonNull View itemView) {
             super(itemView);
-            pokemon_type = itemView.findViewById(R.id.pokemon_type);
-            type_icon= itemView.findViewById(R.id.type_ic);
+            pokemonImage = itemView.findViewById(R.id.pokemonImage);
+            pokemonName = itemView.findViewById(R.id.pokemonName);
         }
     }
 }
